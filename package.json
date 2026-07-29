@@ -1,21 +1,21 @@
 {
-  "name": "ruff",
-  "displayName": "Ruff",
-  "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python.",
+  "name": "ruff-python-37",
+  "displayName": "Ruff for Python 3.7+",
+  "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python (Python 3.7+ backport).",
   "version": "2026.66.0",
   "serverInfo": {
     "name": "Ruff",
     "module": "ruff"
   },
-  "publisher": "charliermarsh",
+  "publisher": "psychosoc1al",
   "license": "MIT",
-  "homepage": "https://github.com/astral-sh/ruff-vscode",
+  "homepage": "https://github.com/Psychosoc1al/ruff-vscode",
   "repository": {
     "type": "git",
-    "url": "https://github.com/astral-sh/ruff-vscode.git"
+    "url": "https://github.com/Psychosoc1al/ruff-vscode.git"
   },
   "bugs": {
-    "url": "https://github.com/astral-sh/ruff-vscode/issues"
+    "url": "https://github.com/Psychosoc1al/ruff-vscode/issues"
   },
   "icon": "icon.png",
   "galleryBanner": {
@@ -71,7 +71,7 @@
     "tsc": "tsc --noEmit",
     "package": "webpack --mode production --devtool source-map --config ./webpack.config.js",
     "watch": "webpack --watch",
-    "vsce-package": "vsce package -o ruff.vsix",
+    "vsce-package": "vsce package -o ruff-python-37.vsix",
     "vscode:prepublish": "npm run package",
     "pretest": "npm run compile-tests && npm run compile",
     "tests": "vscode-test"

@@ -1,10 +1,12 @@
-# Ruff extension for Visual Studio Code
+# Ruff extension for Visual Studio Code (Python 3.7+ Backport)
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![image](https://img.shields.io/pypi/v/ruff/0.16.0.svg)](https://pypi.python.org/pypi/ruff)
 [![image](https://img.shields.io/pypi/l/ruff/0.16.0.svg)](https://pypi.python.org/pypi/ruff)
 [![image](https://img.shields.io/pypi/pyversions/ruff/0.16.0.svg)](https://pypi.python.org/pypi/ruff)
 [![Actions status](https://github.com/astral-sh/ruff-vscode/workflows/CI/badge.svg)](https://github.com/astral-sh/ruff-vscode/actions)
+
+## Note: This is a backport of the [original extension](https://github.com/astral-sh/ruff-vscode) for Python 3.7 which is still supported by `ruff` itself, but not by the VS Code extension
 
 A Visual Studio Code extension for [Ruff](https://github.com/astral-sh/ruff), an extremely fast
 Python linter and code formatter, written in Rust. Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff).

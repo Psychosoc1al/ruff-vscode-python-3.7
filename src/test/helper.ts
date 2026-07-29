@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { platform } from "os";
 
-const EXTENSION_ID = "charliermarsh.ruff";
+const EXTENSION_ID = "psychosoc1al.ruff-python-37";
 
 export async function activateExtension() {
   const extension = vscode.extensions.getExtension(EXTENSION_ID);
