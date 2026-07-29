@@ -545,7 +545,7 @@ async function resolveLegacyInterpreter(
         "Python interpreter missing:\r\n" +
           "[Option 1] Select a Python interpreter using the Python extension.\r\n" +
           `[Option 2] Set an interpreter using the "ruff.interpreter" setting.\r\n` +
-          "Please use Python 3.8 or greater.",
+          "Please use Python 3.7 or greater.",
       );
     } else {
       updateStatus(

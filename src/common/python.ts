@@ -276,13 +276,13 @@ export function checkInterpreterVersion(environment: PythonEnvironmentDetails): 
   if (version == null) {
     return null;
   }
-  if (version.major === 3 && version.minor >= 8) {
+  if (version.major === 3 && version.minor >= 7) {
     return true;
   }
 
   logger.warn(`Python version ${version.major}.${version.minor} is not supported.`);
   logger.warn(`Selected Python path: '${environment.command?.executable}'`);
-  logger.warn("Supported versions are 3.8 and above.");
+  logger.warn("Supported versions are 3.7 and above.");
   return false;
 }
 
