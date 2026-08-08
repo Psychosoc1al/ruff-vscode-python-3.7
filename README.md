@@ -8,6 +8,10 @@
 
 ## Note: This is a backport of the [original extension](https://github.com/astral-sh/ruff-vscode) for Python 3.7 which is still supported by `ruff` itself, but not by the VS Code extension
 
+This extension's links:
+- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=psychosoc1al.ruff-python-37)
+- [OpenVSX](https://open-vsx.org/extension/psychosoc1al/ruff-python-37)
+
 A Visual Studio Code extension for [Ruff](https://github.com/astral-sh/ruff), an extremely fast
 Python linter and code formatter, written in Rust. Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff).
 
