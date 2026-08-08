@@ -2,7 +2,7 @@
   "name": "ruff-python-37",
   "displayName": "Ruff for Python 3.7+",
   "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python (Python 3.7+ backport).",
-  "version": "2026.68.0",
+  "version": "2026.70.0",
   "serverInfo": {
     "name": "Ruff",
     "module": "ruff"
@@ -36,9 +36,7 @@
     "Linters",
     "Formatters"
   ],
-  "extensionDependencies": [
-    "ms-python.python"
-  ],
+  "extensionDependencies": [],
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": "limited",
@@ -59,7 +57,10 @@
     "onLanguage:markdown",
     "workspaceContains:*.py",
     "workspaceContains:*.ipynb",
-    "workspaceContains:*.md"
+    "workspaceContains:*.md",
+    "workspaceContains:**/pyproject.toml",
+    "workspaceContains:**/ruff.toml",
+    "workspaceContains:**/.ruff.toml"
   ],
   "main": "./dist/extension.js",
   "scripts": {
@@ -278,7 +279,7 @@
         },
         "ruff.interpreter": {
           "default": [],
-          "markdownDescription": "Path to a Python interpreter to use to find the `ruff` executable.",
+          "markdownDescription": "Path to a Python interpreter to use to find the `ruff` executable. Requires either the Python Environments or Python extension to be installed.",
           "scope": "resource",
           "items": {
             "type": "string"

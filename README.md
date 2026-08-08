@@ -1,9 +1,9 @@
 # Ruff extension for Visual Studio Code (Python 3.7+ Backport)
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![image](https://img.shields.io/pypi/v/ruff/0.16.1.svg)](https://pypi.python.org/pypi/ruff)
-[![image](https://img.shields.io/pypi/l/ruff/0.16.1.svg)](https://pypi.python.org/pypi/ruff)
-[![image](https://img.shields.io/pypi/pyversions/ruff/0.16.1.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/v/ruff/0.16.2.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/l/ruff/0.16.2.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/pyversions/ruff/0.16.2.svg)](https://pypi.python.org/pypi/ruff)
 [![Actions status](https://github.com/astral-sh/ruff-vscode/workflows/CI/badge.svg)](https://github.com/astral-sh/ruff-vscode/actions)
 
 ## Note: This is a backport of the [original extension](https://github.com/astral-sh/ruff-vscode) for Python 3.7 which is still supported by `ruff` itself, but not by the VS Code extension
@@ -14,7 +14,7 @@ Python linter and code formatter, written in Rust. Available on the [Visual Stud
 Ruff can be used to replace Flake8 (plus dozens of plugins), Black, isort, pyupgrade, and more,
 all while executing tens or hundreds of times faster than any individual tool.
 
-The extension ships with `ruff==0.16.1`.
+The extension ships with `ruff==0.16.2`.
 
 ## Highlights
 
@@ -34,10 +34,31 @@ The extension ships with `ruff==0.16.1`.
 
 ![Using the "Organize Imports" action to sort and deduplicate Python imports](https://user-images.githubusercontent.com/1309177/205175987-82e23e21-14bb-467d-9ef0-027f24b75865.gif)
 
+## Requirements
+
+This extension does not _require_ any additional extensions to function, but we recommend installing
+either of the following:
+
+- The VS Code [Python Environments
+  extension](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-python-envs). Note
+  that this requires VS Code 1.100 or later.
+- A version of the VSCode [Python
+  extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) that supports
+  Python 3.7+.
+
+When either of these is available, the Ruff extension uses it to locate the Ruff binary in the
+active environment. If no binary is found there, or both extensions are unavailable, Ruff falls back
+to the Ruff binary found on the `PATH` or bundled with the extension.
+
+Note that the deprecated `ruff-lsp` server requires one of these extensions to locate a Python
+interpreter. If neither is installed, Ruff uses its native server instead. Reload VS Code after
+installing either extension to enable Python environment detection.
+
 ## Usage
 
 Once installed in Visual Studio Code, `ruff` will automatically execute when you open or edit a
-Python or Jupyter Notebook file.
+Python or Jupyter Notebook file, or a Ruff configuration file (`pyproject.toml`, `ruff.toml`, or
+`.ruff.toml`).
 
 If you want to disable Ruff, you can [disable this extension](https://code.visualstudio.com/docs/editor/extension-marketplace#_disable-an-extension)
 per workspace in Visual Studio Code.
@@ -125,13 +146,10 @@ And, for Jupyter Notebooks:
 }
 ```
 
-And for [Markdown code blocks](https://docs.astral.sh/ruff/formatter/#markdown-code-formatting).
-Note that this currently reqiures enabling [preview mode](https://docs.astral.sh/ruff/preview/)
-which will change formatting results:
+And for [Markdown code blocks](https://docs.astral.sh/ruff/formatter/#markdown-code-formatting):
 
 ```json
 {
-  "ruff.format.preview": true,
   "[markdown]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "charliermarsh.ruff"
@@ -378,11 +396,6 @@ Finally, to use a common Ruff configuration across all projects, consider creati
 | Ruff: Print debug information (native server only) | Print debug information about the native server |
 | Ruff: Show client logs                             | Open the Ruff output channel                    |
 | Ruff: Show server logs                             | Open the Ruff Language Server output channel    |
-
-## Requirements
-
-This extension requires a version of the VSCode Python extension that supports Python 3.7+. Ruff
-itself is compatible with Python 3.7 to 3.13.
 
 ## Troubleshooting
 
