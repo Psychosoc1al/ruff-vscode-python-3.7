@@ -6,13 +6,35 @@ This extension is based on the [Template for VS Code Python tools extensions](ht
 
 ### Getting Started
 
-- Install [`uv`](https://github.com/astral-sh/uv)
-- Install [`just`](https://github.com/casey/just), or see the `justfile` for corresponding commands.
-- Create and activate a virtual environment (e.g., `uv venv && source .venv/bin/activate`).
-- Install development dependencies (`just install`).
-- To automatically format the codebase, run: `just fmt`.
-- To run lint and type checks, run: `just check`.
-- To run tests, run: `just test`.
+- Install [Node.js](https://nodejs.org/).
+- Install [`uv`](https://github.com/astral-sh/uv).
+
+Install development dependencies:
+
+```console
+uv sync --dev
+uv pip sync --require-hashes ./requirements.txt --target ./bundled/libs
+npm ci --ignore-scripts
+```
+
+To automatically format the codebase:
+
+```console
+npm run fmt
+```
+
+To run lint and type checks:
+
+```console
+npm run check
+```
+
+To run tests:
+
+```console
+uv pip sync --require-hashes ./requirements.txt --target ./bundled/libs
+uv run --dev python -m unittest
+```
 
 To run the extension, navigate to `src/extension.ts` and run (`F5`). You should see the LSP output
 and Python log messages in the debug console under "Python Server".

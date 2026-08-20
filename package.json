@@ -2,7 +2,7 @@
   "name": "ruff-python-37",
   "displayName": "Ruff for Python 3.7+",
   "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python (Python 3.7+ backport).",
-  "version": "2026.72.0",
+  "version": "2026.74.0",
   "serverInfo": {
     "name": "Ruff",
     "module": "ruff"
@@ -29,7 +29,8 @@
     "ruff"
   ],
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.75.0",
+    "npm": ">=11.10.0"
   },
   "categories": [
     "Programming Languages",
@@ -64,7 +65,11 @@
   ],
   "main": "./dist/extension.js",
   "scripts": {
-    "fmt": "prettier -w .",
+    "check": "npm run check:python && npm run fmt-check && npm run lint && npm run tsc",
+    "check:python": "uv run --dev ruff check ./bundled/tool ./build ./tests ./scripts && uv run --dev ruff format --check ./bundled/tool ./build ./tests ./scripts && npm run check:release && uv run --dev mypy",
+    "check:release": "uv tool run --with-requirements ./scripts/release.py ty check ./scripts/release.py",
+    "fmt": "npm run fmt:python && prettier -w .",
+    "fmt:python": "uv run --dev ruff check --fix ./bundled/tool ./build ./tests ./scripts && uv run --dev ruff format ./bundled/tool ./build ./tests ./scripts && uv tool run --with-requirements ./scripts/release.py ty check --fix ./scripts/release.py",
     "fmt-check": "prettier --check .",
     "lint": "eslint src --ext ts --max-warnings=0",
     "compile": "webpack",
@@ -503,7 +508,6 @@
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import-x": "^4.16.2",
     "glob": "^13.0.0",
-    "ovsx": "^1.0.0",
     "prettier": "^3.5.3",
     "ts-loader": "^9.5.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2",

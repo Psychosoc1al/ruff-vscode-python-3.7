@@ -1,11 +1,15 @@
 [project]
 name = "ruff-vscode"
-version = "2026.72.0"
-requires-python = ">=3.7"
-dependencies = ["packaging>=23.1", "ruff-lsp==0.0.62", "ruff==0.16.3"]
+version = "2026.74.0"
+requires-python = ">=3.7.9"
+dependencies = ["packaging>=23.1", "ruff-lsp==0.0.62", "ruff==0.16.4"]
 
-[project.optional-dependencies]
-dev = ["mypy==1.2.0", "python-lsp-jsonrpc==1.0.0"]
+[tool.uv]
+exclude-newer = "P7D"
+# Release automation intentionally tracks the latest Ruff and ruff-lsp.
+exclude-newer-package = { ruff = false, ruff-lsp = false }
+# ruff-lsp 0.0.62 imports APIs that were removed in newer releases.
+constraint-dependencies = ["lsprotocol==2023.0.0", "pygls==1.2.1"]
 
 [tool.ruff]
 line-length = 88
@@ -23,3 +27,9 @@ check_untyped_defs = true
 [[tool.mypy.overrides]]
 module = ["debugpy.*", "lsprotocol.*", "pygls.*", "pylsp_jsonrpc.*"]
 ignore_missing_imports = true
+
+[dependency-groups]
+dev = [
+    "mypy==1.2.0",
+    "python-lsp-jsonrpc==1.0.0",
+]

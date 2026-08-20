@@ -9,11 +9,12 @@ This script does the following things:
 """
 
 # /// script
-# requires-python = "==3.7.*"
+# requires-python = ">=3.12"
 # dependencies = ["packaging", "requests", "rich-argparse", "tomli", "tomlkit"]
 #
 # [tool.uv]
-# exclude-newer = "2024-11-27T00:00:00Z"
+# exclude-newer = "P7D"
+# no-build = true
 # ///
 from __future__ import annotations
 
@@ -219,9 +220,30 @@ def update_changelog(versions: RuffVersions) -> None:
 
 def lock_requirements() -> None:
     """Update this package's lockfiles."""
-    for path in "requirements-dev.txt", "requirements.txt":
-        Path(path).unlink()
-    subprocess.run(["just", "lock"], check=True)
+    Path("requirements.txt").unlink()
+    subprocess.run(
+        ["uv", "lock", "--default-index", "https://pypi.org/simple"], check=True
+    )
+    subprocess.run(
+        [
+            "uv",
+            "export",
+            "--default-index",
+            "https://pypi.org/simple",
+            "--format",
+            "requirements-txt",
+            "--no-dev",
+            "--no-emit-project",
+            "--locked",
+            "--output-file",
+            "./requirements.txt",
+        ],
+        check=True,
+    )
+    subprocess.run(
+        ["npm", "install", "--package-lock-only", "--ignore-scripts"],
+        check=True,
+    )
 
 
 def commit_changes(versions: RuffVersions) -> None:
