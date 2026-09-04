@@ -2,20 +2,20 @@
   "name": "ruff-python-37",
   "displayName": "Ruff for Python 3.7+",
   "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python (Python 3.7+ backport).",
-  "version": "2026.76.0",
+  "version": "2026.78.0",
   "serverInfo": {
     "name": "Ruff",
     "module": "ruff"
   },
   "publisher": "psychosoc1al",
   "license": "MIT",
-  "homepage": "https://github.com/Psychosoc1al/ruff-vscode",
+  "homepage": "https://github.com/Psychosoc1al/ruff-vscode-python-3.7",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Psychosoc1al/ruff-vscode.git"
+    "url": "https://github.com/Psychosoc1al/ruff-vscode-python-3.7.git"
   },
   "bugs": {
-    "url": "https://github.com/Psychosoc1al/ruff-vscode/issues"
+    "url": "https://github.com/Psychosoc1al/ruff-vscode-python-3.7/issues"
   },
   "icon": "icon.png",
   "galleryBanner": {
