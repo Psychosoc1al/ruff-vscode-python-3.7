@@ -1,15 +1,13 @@
 [project]
 name = "ruff-vscode"
-version = "2026.84.0"
+version = "2026.86.0"
 requires-python = ">=3.7.9"
-dependencies = ["packaging>=23.1", "ruff-lsp==0.0.62", "ruff==0.16.9"]
+dependencies = ["ruff==0.17.0"]
 
 [tool.uv]
 exclude-newer = "P7D"
-# Release automation intentionally tracks the latest Ruff and ruff-lsp.
-exclude-newer-package = { ruff = false, ruff-lsp = false }
-# ruff-lsp 0.0.62 imports APIs that were removed in newer releases.
-constraint-dependencies = ["lsprotocol==2023.0.0", "pygls==1.2.1"]
+# Release automation intentionally tracks the latest Ruff.
+exclude-newer-package = { ruff = false }
 
 [tool.ruff]
 line-length = 88
@@ -30,6 +28,9 @@ ignore_missing_imports = true
 
 [dependency-groups]
 dev = [
-    "mypy==1.2.0",               # `ty` requires Python 3.8+
-    "python-lsp-jsonrpc==1.0.0",
+    "mypy==1.2.0",
+    "ruff>=0.16.2",
+    # These require Python 3.8+:
+    # "ty>=0.0.69", 
+    # "uv>=0.12.3",
 ]
