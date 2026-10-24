@@ -2,7 +2,7 @@
   "name": "ruff-python-37",
   "displayName": "Ruff for Python 3.7+",
   "description": "A Visual Studio Code extension with support for the Ruff linter and formatter for Python (Python 3.7+ backport).",
-  "version": "2026.86.0",
+  "version": "2026.90.0",
   "serverInfo": {
     "name": "Ruff",
     "module": "ruff"
@@ -214,7 +214,7 @@
             "useBundled"
           ],
           "enumDescriptions": [
-            "Use `ruff` from environment, falling back to the bundled version if `ruff` is not found.",
+            "Look for `ruff` using the configured interpreter, or in the active Python environment when the Python Environments or Python extension is available. Fall back to `PATH`, then the bundled version.",
             "Always use the bundled version of `ruff`."
           ],
           "scope": "window",
@@ -222,7 +222,7 @@
         },
         "ruff.interpreter": {
           "default": [],
-          "markdownDescription": "Path to a Python interpreter to use to find the `ruff` executable. Requires either the Python Environments or Python extension to be installed.",
+          "markdownDescription": "Path to a Python executable or environment directory used to find the `ruff` executable. Python 3.8 or later is required. This setting works without the Python Environments or Python extension.",
           "scope": "resource",
           "items": {
             "type": "string"
@@ -405,7 +405,7 @@
     "@vscode/python-environments": "^1.0.0",
     "@vscode/test-cli": "^0.0.15",
     "@vscode/test-electron": "^3.0.0",
-    "@vscode/vsce": "^3.4.2",
+    "@vscode/vsce": "^4.0.0",
     "eslint": "^10.0.0",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import-x": "^4.16.2",

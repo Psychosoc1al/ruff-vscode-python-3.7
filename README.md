@@ -1,9 +1,9 @@
 # Ruff extension for Visual Studio Code (Python 3.7+ Backport)
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![image](https://img.shields.io/pypi/v/ruff/0.17.0.svg)](https://pypi.python.org/pypi/ruff)
-[![image](https://img.shields.io/pypi/l/ruff/0.17.0.svg)](https://pypi.python.org/pypi/ruff)
-[![image](https://img.shields.io/pypi/pyversions/ruff/0.17.0.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/v/ruff/0.17.2.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/l/ruff/0.17.2.svg)](https://pypi.python.org/pypi/ruff)
+[![image](https://img.shields.io/pypi/pyversions/ruff/0.17.2.svg)](https://pypi.python.org/pypi/ruff)
 [![Actions status](https://github.com/astral-sh/ruff-vscode/workflows/CI/badge.svg)](https://github.com/astral-sh/ruff-vscode/actions)
 
 ## Note: This is a backport of the [original extension](https://github.com/astral-sh/ruff-vscode) for Python 3.7 which is still supported by `ruff` itself, but not by the VS Code extension
@@ -19,7 +19,7 @@ Python linter and code formatter, written in Rust. Available on the [Visual Stud
 Ruff can be used to replace Flake8 (plus dozens of plugins), Black, isort, pyupgrade, and more,
 all while executing tens or hundreds of times faster than any individual tool.
 
-The extension ships with `ruff==0.17.0`.
+The extension ships with `ruff==0.17.2`.
 
 ## Highlights
 
@@ -52,8 +52,9 @@ either of the following:
   Python 3.7+.
 
 When either of these is available, the Ruff extension uses it to locate the Ruff binary in the
-active environment. If no binary is found there, or both extensions are unavailable, Ruff falls back
-to the Ruff binary found on the `PATH` or bundled with the extension.
+active environment. You can also set `ruff.interpreter` to a Python executable or environment
+directory without either extension. If no Ruff executable is found in a Python environment, the
+extension checks `PATH` before using its bundled executable.
 
 Reload VS Code after installing either extension to enable Python environment detection.
 

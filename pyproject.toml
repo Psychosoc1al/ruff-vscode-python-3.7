@@ -1,13 +1,13 @@
 [project]
 name = "ruff-vscode"
-version = "2026.86.0"
+version = "2026.90.0"
 requires-python = ">=3.7.9"
-dependencies = ["ruff==0.17.0"]
+dependencies = ["ruff==0.17.2"]
 
 [tool.uv]
 exclude-newer = "P7D"
 # Release automation intentionally tracks the latest Ruff.
-exclude-newer-package = { ruff = false }
+exclude-newer-package = { ruff = false, uv = false }
 
 [tool.ruff]
 line-length = 88
