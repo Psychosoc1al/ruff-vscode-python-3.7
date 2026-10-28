@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          # renovate: datasource=github-release-attachments depName=astral-sh/uv
+          version: "0.13.5"
+          checksum: "f68d291c75783122dad58ab77def0e13f3233f358731db5d6d7e8715603b928f"
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.21.0"
+          package-manager-cache: false
+      - name: Install dependencies
+        run: |
+          uv sync --dev
+          uv pip sync --require-hashes ./requirements.txt --target ./bundled/libs
+          npm ci --ignore-scripts
+      - name: Run checks
+        run: npm run check
+
+  # ts-tests:
+  #   name: TypeScript Tests
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     UV_SYSTEM_PYTHON: 1
+  #   steps:
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.8"
+  #     - uses: hynek/setup-cached-uv@v1
+  #     - uses: actions/checkout@v4
+  #     - name: Install dependencies
+  #       run: |
+  #         uv pip sync --require-hashes ./requirements.txt --target ./bundled/libs
+  #         npm ci
+  #       shell: bash
+  #     - name: Compile tests
+  #       run: npm run pretest
+  #       shell: bash
+  #     - name: Run tests
+  #       run: xvfb-run npm run tests
+  #       shell: bash
