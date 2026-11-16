@@ -44,11 +44,11 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.x"
-      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           # renovate: datasource=github-release-attachments depName=astral-sh/uv
-          version: "0.13.5"
-          checksum: "f68d291c75783122dad58ab77def0e13f3233f358731db5d6d7e8715603b928f"
+          version: "0.13.8"
+          checksum: "5acfd9177cfecf0bf87578f059728215ccc884388988f55f7a65041b57387d91"
       - name: Validate release metadata
         id: metadata
         run: |
@@ -115,6 +115,8 @@ jobs:
       contents: read
 
     steps:
+      - if: runner.os == 'macOS'
+        uses: astral-sh/github-actions/demudhra@7aa50a3def9f5428c532b0ae972d1e5b357de5a5 # 2026.11.03.0
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -135,7 +137,7 @@ jobs:
         if: ${{ startsWith(matrix.os, 'macos') && startsWith(matrix.target, 'x86_64') }}
 
       # ARM builds on Ubuntu, which should select Ruff's ARM binary.
-      - uses: uraimo/run-on-arch-action@460cb8e6d9f726a588fc9b5e681c8a6cab09ae41 # v3.2.0
+      - uses: uraimo/run-on-arch-action@fa1f3e7de95534497266c7265950b5188355fbfb # v3.2.1
         if: ${{ startsWith(matrix.os, 'ubuntu') && !startsWith(matrix.target, 'x86_64') && !endsWith(matrix.target, 'musl') }}
         with:
           arch: ${{ matrix.arch }}
@@ -168,9 +170,9 @@ jobs:
 
       # Install Node.
       - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.21.0"
+          node-version: "26.12.0"
           package-manager-cache: false
 
       # Install Node dependencies.
@@ -200,7 +202,7 @@ jobs:
 
       # Upload the extension.
       - name: Upload artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dist-${{ matrix.target }}
           path: ./dist
@@ -218,96 +220,20 @@ jobs:
       - run: echo "Release approved"
 
   # Phase 4: Publish the built extension to both marketplaces.
-  # Unfortunately, I am an untermensch not allowed to use Microsoft Azure :(
-  # publish-code-marketplace:
-  #   name: "Publish (Code Marketplace)"
-  #   needs: ["validate-release", "release-gate"]
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: release
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - name: Install Nodejs
-  #       uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-  #       with:
-  #         node-version: "24.21.0"
-  #         package-manager-cache: false
-
-  #     - name: Checkout repository
-  #       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  #       with:
-  #         fetch-depth: ${{ env.FETCH_DEPTH }}
-  #         persist-credentials: false
-
-  #     # Download all built artifacts.
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-aarch64-apple-darwin
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-x86_64-apple-darwin
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-x86_64-unknown-linux-gnu
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-aarch64-unknown-linux-gnu
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-arm-unknown-linux-gnueabihf
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-x86_64-pc-windows-msvc
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-aarch64-pc-windows-msvc
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-x86_64-unknown-linux-musl
-  #         path: dist
-  #     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-  #       with:
-  #         name: dist-aarch64-unknown-linux-musl
-  #         path: dist
-  #     - run: ls -al ./dist
-
-  #     # Install the marketplace publishing tools.
-  #     - run: npm ci --ignore-scripts
-  #       working-directory: scripts/publish
-
-  #     # Publish to the Code Marketplace.
-  #     - name: Publish Extension (Code Marketplace, release)
-  #       if: needs.validate-release.outputs.prerelease == 'false'
-  #       run: ./scripts/publish/node_modules/.bin/vsce publish --packagePath ./dist/ruff-*.vsix --skip-duplicate
-  #       env:
-  #         VSCE_PAT: ${{ secrets.MARKETPLACE_TOKEN }}
-  #     - name: Publish Extension (Code Marketplace, nightly)
-  #       if: needs.validate-release.outputs.prerelease == 'true'
-  #       run: ./scripts/publish/node_modules/.bin/vsce publish --packagePath ./dist/ruff-*.vsix --pre-release --skip-duplicate
-  #       env:
-  #         VSCE_PAT: ${{ secrets.MARKETPLACE_TOKEN }}
-
-  publish-openvsx:
-    name: "Publish (OpenVSX)"
+  publish-code-marketplace:
+    name: "Publish (Code Marketplace)"
     needs: ["validate-release", "release-gate"]
     runs-on: ubuntu-latest
     environment:
       name: release
     permissions:
       contents: read
+      id-token: write
     steps:
       - name: Install Nodejs
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.21.0"
+          node-version: "26.12.0"
           package-manager-cache: false
 
       - name: Checkout repository
@@ -317,39 +243,112 @@ jobs:
           persist-credentials: false
 
       # Download all built artifacts.
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-aarch64-apple-darwin
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-x86_64-apple-darwin
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-x86_64-unknown-linux-gnu
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-aarch64-unknown-linux-gnu
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-arm-unknown-linux-gnueabihf
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-x86_64-pc-windows-msvc
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-aarch64-pc-windows-msvc
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-x86_64-unknown-linux-musl
           path: dist
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-aarch64-unknown-linux-musl
+          path: dist
+      - run: ls -al ./dist
+
+      # Install the marketplace publishing tools.
+      - run: npm ci --ignore-scripts
+        working-directory: scripts/publish
+
+      # Publish to the Code Marketplace.
+      - name: Publish Extension (Code Marketplace, release)
+        if: needs.validate-release.outputs.prerelease == 'false'
+        run: ./scripts/publish/node_modules/.bin/vsce publish --oidc --packagePath ./dist/ruff-*.vsix --skip-duplicate
+      - name: Publish Extension (Code Marketplace, nightly)
+        if: needs.validate-release.outputs.prerelease == 'true'
+        run: ./scripts/publish/node_modules/.bin/vsce publish --oidc --packagePath ./dist/ruff-*.vsix --pre-release --skip-duplicate
+
+  publish-openvsx:
+    name: "Publish (OpenVSX)"
+    needs: ["validate-release", "release-gate"]
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Install Nodejs
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "26.12.0"
+          package-manager-cache: false
+
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: ${{ env.FETCH_DEPTH }}
+          persist-credentials: false
+
+      # Download all built artifacts.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-aarch64-apple-darwin
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-x86_64-apple-darwin
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-x86_64-unknown-linux-gnu
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-aarch64-unknown-linux-gnu
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-arm-unknown-linux-gnueabihf
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-x86_64-pc-windows-msvc
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-aarch64-pc-windows-msvc
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist-x86_64-unknown-linux-musl
+          path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: dist-aarch64-unknown-linux-musl
           path: dist
@@ -362,15 +361,11 @@ jobs:
       # Publish to OpenVSX.
       - name: Publish Extension (OpenVSX, release)
         if: needs.validate-release.outputs.prerelease == 'false'
-        run: ./scripts/publish/node_modules/.bin/ovsx publish --packagePath ./dist/ruff-*.vsix --skip-duplicate
-        env:
-          OVSX_PAT: ${{ secrets.OPENVSX_TOKEN }}
+        run: ./scripts/publish/node_modules/.bin/ovsx publish --trusted-publishing --packagePath ./dist/ruff-*.vsix --skip-duplicate
         timeout-minutes: 2
       - name: Publish Extension (OpenVSX, nightly)
         if: needs.validate-release.outputs.prerelease == 'true'
-        run: ./scripts/publish/node_modules/.bin/ovsx publish --packagePath ./dist/ruff-*.vsix --pre-release --skip-duplicate
-        env:
-          OVSX_PAT: ${{ secrets.OPENVSX_TOKEN }}
+        run: ./scripts/publish/node_modules/.bin/ovsx publish --trusted-publishing --packagePath ./dist/ruff-*.vsix --pre-release --skip-duplicate
         timeout-minutes: 2
 
   # Phase 5: Create the tag and GitHub release after both publications succeed.
