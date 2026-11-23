@@ -1,8 +1,8 @@
 [project]
 name = "ruff-vscode"
-version = "2026.96.0"
+version = "2026.98.0"
 requires-python = ">=3.7.9"
-dependencies = ["ruff==0.17.5"]
+dependencies = ["ruff==0.17.6"]
 
 [tool.uv]
 exclude-newer = "P7D"
@@ -34,3 +34,4 @@ dev = [
     # "ty>=0.0.69", 
     # "uv>=0.12.3",
 ]
+jaq = ["astral-dev-toolchain-jaq>=3.1.1"]
